@@ -73,6 +73,7 @@ void Preprocess::process(const sensor_msgs::PointCloud2::ConstPtr &msg, PointClo
     printf("Error LiDAR Type");
     break;
   }
+  cout << "pl_corn: " << pl_corn.size() << ", pl_surf: " << pl_surf.size() << ", pl_full: " << pl_full.size() << endl;
   *pcl_full = pl_full;
   *pcl_surf = pl_surf;
   *pcl_corn = pl_corn;
@@ -171,7 +172,7 @@ void Preprocess::avia_handler(const livox_ros_driver::CustomMsg::ConstPtr &msg)
               || (abs(pl_full[i].z - pl_full[i-1].z) > 1e-7)
               && (pl_full[i].x * pl_full[i].x + pl_full[i].y * pl_full[i].y + pl_full[i].z * pl_full[i].z > (blind * blind)))
           {
-            pl_surf.push_back(pl_full[i]);
+            pl_full.push_back(pl_full[i]);
           }
         }
       }
@@ -267,11 +268,9 @@ void Preprocess::oust64_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
       added_pt.normal_z = 0;
       added_pt.curvature = pl_orig.points[i].t / 1e6; // curvature unit: ms
 
-      pl_surf.points.push_back(added_pt);
+      pl_full.points.push_back(added_pt);
     }
   }
-  // pub_func(pl_surf, pub_full, msg->header.stamp);
-  // pub_func(pl_surf, pub_corn, msg->header.stamp);
 }
 
 void Preprocess::velodyne_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
@@ -446,7 +445,7 @@ void Preprocess::velodyne_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
       {
         if (added_pt.x * added_pt.x + added_pt.y * added_pt.y + added_pt.z * added_pt.z > (blind * blind))
         {
-          pl_surf.points.push_back(added_pt);
+          pl_full.points.push_back(added_pt);
         }
       }
     }
@@ -780,15 +779,6 @@ void Preprocess::give_feature(pcl::PointCloud<PointType> &pl, vector<orgtype> &t
       last_surface = -1;
     }
   }
-}
-
-void Preprocess::pub_func(PointCloudXYZI &pl, const ros::Time &ct)
-{
-  pl.height = 1; pl.width = pl.size();
-  sensor_msgs::PointCloud2 output;
-  pcl::toROSMsg(pl, output);
-  output.header.frame_id = "livox";
-  output.header.stamp = ct;
 }
 
 // （line点云，点属性， 当前点索引，当前点索引，当前方向）
@@ -1216,5 +1206,4 @@ void Preprocess::pandar_handler(const sensor_msgs::PointCloud2::ConstPtr &msg)
         pl_full.points.push_back(added_pt);
       }
     }
-    cout << "pl_corn: " << pl_corn.size() << ", pl_surf: " << pl_surf.size() << ", pl_full: " << pl_full.size() << endl;
 }
