@@ -1,0 +1,15 @@
+
+# ignore dir or file
+.DS_Store
+.vscode
+./CMakeLists.txt
+PCD
+Log/*.txt
+.vscode
+rosbag
+
+
+#whitelist
+
+
+
