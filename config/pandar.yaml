@@ -11,6 +11,7 @@ frames:
     baselinkFrame: "robot1/base_link"
     odometryFrame: "robot1/odom"
     mapFrame: "robot1/map"
+    visFrame: "robot1/camera_init"
     
 preprocess:
     lidar_type: 5                # 1 for Livox serials LiDAR, 2 for Velodyne LiDAR, 3 for ouster LiDAR, 
@@ -81,6 +82,6 @@ visulize_IkdtreeMap: true
 recontructKdTree: true
 
 # Export settings
-savePCD: true                         # https://github.com/TixiaoShan/LIO-SAM/issues/3
+savePCD: false                         # https://github.com/TixiaoShan/LIO-SAM/issues/3
 savePCDDirectory: "/catkin_ws/src/FAST_LIO_SAM/PCD/"        # in your home folder, starts and ends with "/". Warning: the code deletes "LOAM" folder then recreates it. See "mapOptimization" for implementation
 
