@@ -374,6 +374,7 @@ void ImuProcess::Process(const MeasureGroup &meas,  esekfom::esekf<state_ikfom, 
       /** 1. initializing the gravity, gyro bias, acc and gyro covariance
         * 2. normalize the acceleration measurenments to unit gravity **/
     /// The very first lidar frame
+    cout << "IMU_init(meas, kf_state, init_iter_num);"<<", measure: {start: "<<meas.lidar_beg_time<<", end: "<<meas.lidar_end_time<<", lidar_size: "<<meas.lidar->size()<<", imu deque size:"<<meas.imu.size()<<", init_iter_num: "<<init_iter_num<<endl;
     IMU_init(meas, kf_state, init_iter_num);
 
     imu_need_init_ = true;
@@ -396,6 +397,8 @@ void ImuProcess::Process(const MeasureGroup &meas,  esekfom::esekf<state_ikfom, 
 
     return;
   }
+
+  cout << "UndistortPcl(meas, kf_state, *cur_pcl_un_);"<<endl;
 
   //畸变纠正
   UndistortPcl(meas, kf_state, *cur_pcl_un_);

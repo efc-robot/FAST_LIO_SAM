@@ -7,11 +7,10 @@ common:
     time_sync_en: false         # ONLY turn on when external time synchronization is really not possible
 
 frames:
-    lidarFrame: "robot1/base_link"
-    baselinkFrame: "robot1/base_link"
-    odometryFrame: "robot1/odom"
-    mapFrame: "robot1/map"
-    visFrame: "robot1/camera_init"
+    lidarFrame: "base_link"
+    baselinkFrame: "base_link"
+    odometryFrame: "Odometry"
+    mapFrame: "map"
     
 preprocess:
     lidar_type: 5                # 1 for Livox serials LiDAR, 2 for Velodyne LiDAR, 3 for ouster LiDAR, 

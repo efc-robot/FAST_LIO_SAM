@@ -73,7 +73,7 @@ void Preprocess::process(const sensor_msgs::PointCloud2::ConstPtr &msg, PointClo
     printf("Error LiDAR Type");
     break;
   }
-  cout << "pl_corn: " << pl_corn.size() << ", pl_surf: " << pl_surf.size() << ", pl_full: " << pl_full.size() << endl;
+  // cout << "pl_corn: " << pl_corn.size() << ", pl_surf: " << pl_surf.size() << ", pl_full: " << pl_full.size() << endl;
   *pcl_full = pl_full;
   *pcl_surf = pl_surf;
   *pcl_corn = pl_corn;

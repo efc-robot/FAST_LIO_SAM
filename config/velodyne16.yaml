@@ -1,6 +1,16 @@
+robot_id: "robot1"
+
 common:
-    lid_topic:  "/velodyne_points"
-    imu_topic:  "/imu/data"
+    lid_topic:  "velodyne_points"
+    imu_topic:  "imu"
+
+
+frames:
+    lidarFrame: "base_link"
+    baselinkFrame: "base_link"
+    odometryFrame: "odom"
+    mapFrame: "map"
+    visFrame: "camera_init"
 
 #NCLT
 #    lid_topic: "/points_raw"

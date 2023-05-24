@@ -42,6 +42,9 @@
   <test_depend>rostest</test_depend>
   <test_depend>rosbag</test_depend>
 
+  <build_depend>gtsam_catkin</build_depend>
+  <run_depend>gtsam_catkin</run_depend>
+
   <export>
   </export>
 </package>

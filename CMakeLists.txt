@@ -54,14 +54,12 @@ find_package(catkin REQUIRED COMPONENTS
   livox_ros_driver
   message_generation
   eigen_conversions
+  gtsam_catkin
 )
 
 find_package(Eigen3 REQUIRED)
 find_package(PCL REQUIRED)
 find_package (GeographicLib REQUIRED)
-
-find_package( GTSAMCMakeTools )
-find_package(GTSAM REQUIRED QUIET)
 
 message(Eigen: ${EIGEN3_INCLUDE_DIR})
 
@@ -110,7 +108,7 @@ generate_messages(
 
 catkin_package(
   CATKIN_DEPENDS geometry_msgs nav_msgs roscpp rospy std_msgs message_runtime
-  DEPENDS EIGEN3 PCL GTSAM
+  DEPENDS EIGEN3 PCL
   INCLUDE_DIRS
 )
 
@@ -121,5 +119,5 @@ catkin_package(
 add_library(ikd_Tree include/ikd-Tree/ikd_Tree.cpp)
 add_library(preprocess  src/preprocess.cpp)
 add_executable(fastlio_sam_mapping src/laserMapping.cpp)
-target_link_libraries(fastlio_sam_mapping ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${PYTHON_LIBRARIES}  ${GeographicLib_LIBRARIES} ikd_Tree preprocess gtsam) 
+target_link_libraries(fastlio_sam_mapping ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${PYTHON_LIBRARIES}  ${GeographicLib_LIBRARIES} ikd_Tree preprocess) 
 target_include_directories(fastlio_sam_mapping PRIVATE ${PYTHON_INCLUDE_DIRS})

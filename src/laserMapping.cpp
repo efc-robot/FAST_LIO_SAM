@@ -2236,8 +2236,8 @@ int main(int argc, char **argv)
     nh.param<bool>("publish/scan_bodyframe_pub_en", scan_body_pub_en, true);
     nh.param<int>("max_iteration", NUM_MAX_ITERATIONS, 4);
     nh.param<string>("map_file_path", map_file_path, "");
-    nh.param<string>("common/lid_topic", lid_topic, "/livox/lidar");
-    nh.param<string>("common/imu_topic", imu_topic, "/livox/imu");
+    nh.param<string>("common/lid_topic", lid_topic, "livox/lidar");
+    nh.param<string>("common/imu_topic", imu_topic, "livox/imu");
     nh.param<bool>("common/time_sync_en", time_sync_en, false);
     nh.param<double>("filter_size_corner", filter_size_corner_min, 0.5);
     nh.param<double>("filter_size_surf", filter_size_surf_min, 0.5);
@@ -2269,9 +2269,16 @@ int main(int argc, char **argv)
     nh.param<std::string>("frames/odometryFrame", odometryFrame, "odom");
     nh.param<std::string>("frames/lidarFrame", lidarFrame, "base_link");
     nh.param<std::string>("frames/baselinkFrame", baselinkFrame, "base_link");
-    nh.param<std::string>("frames/odometryFrame", odometryFrame, "odom");
     nh.param<std::string>("frames/mapFrame", mapFrame, "map");
     nh.param<std::string>("frames/visFrame", visFrame, "camera_init");
+    
+
+    odometryFrame  = robot_id + "/" + odometryFrame;
+    lidarFrame  = robot_id + "/" + lidarFrame;
+    baselinkFrame  = robot_id + "/" + baselinkFrame;
+    visFrame  = robot_id + "/" + visFrame;
+    mapFrame  = robot_id + "/" + mapFrame;
+
     /*  Merge from LIO-SAM@zzl end  */
 
     nh.param<float>("odometrySurfLeafSize", odometrySurfLeafSize, 0.2);
@@ -2444,6 +2451,7 @@ int main(int argc, char **argv)
         ros::spinOnce();
 
         /// 在Measure内，储存当前lidar数据及lidar扫描时间内对应的imu数据序列
+        // cout << "sync_packages(Measures)"<<endl;
         if (sync_packages(Measures))
         {
             //第一帧lidar数据
@@ -2466,6 +2474,7 @@ int main(int argc, char **argv)
 
             //根据imu数据序列和lidar数据，向前传播纠正点云的畸变, 此前已经完成间隔采样或特征提取
             // feats_undistort 为畸变纠正之后的点云,lidar系
+            // cout << "p_img-> process"<<endl;
             p_imu->Process(Measures, kf, feats_undistort);
             state_point = kf.get_x();                                               // 前向传播后body的状态预测值
             pos_lid = state_point.pos + state_point.rot * state_point.offset_T_L_I; // global系 lidar位置
