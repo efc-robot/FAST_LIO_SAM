@@ -895,8 +895,8 @@ void saveKeyFramesAndFactor()
     pcl::PointCloud<PointType>::Ptr currentMapKeyFrame(new pcl::PointCloud<PointType>());
     int keFrameIndex = (int)thisPose6D.intensity;
     // *currentMapKeyFrame += *transformPointCloud(cornerCloudKeyFrames[keFrameIndex], &cloudKeyPoses6D->points[keFrameIndex]);
-    ROS_INFO("Publish keyframe");
-    *currentMapKeyFrame += *transformPointCloud(surfCloudKeyFrames[keFrameIndex], &cloudKeyPoses6D->points[keFrameIndex]);
+    // *currentMapKeyFrame += *transformPointCloud(surfCloudKeyFrames[keFrameIndex], &cloudKeyPoses6D->points[keFrameIndex]);
+    *currentMapKeyFrame += *surfCloudKeyFrames[keFrameIndex];
     sensor_msgs::PointCloud2 KeyFramePC = publishCloud(pubCurrentMapKeyFrame, currentMapKeyFrame, timeLaserInfoStamp, odometryFrame);
     fast_lio_sam::keyframe KeyFrame;
     // KeyFrame.header = lastHeader;
@@ -906,6 +906,7 @@ void saveKeyFramesAndFactor()
     KeyFrame.transform = transferBetweenLatest;
     KeyFrame.pc = KeyFramePC;
     pubKeyFrame.publish(KeyFrame);
+    ROS_INFO("Publish keyframe");
     /*  Merge from LIO-SAM@zzl  END  */
 
     updatePath(thisPose6D); //  可视化update后的path

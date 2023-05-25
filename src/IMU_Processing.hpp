@@ -398,7 +398,7 @@ void ImuProcess::Process(const MeasureGroup &meas,  esekfom::esekf<state_ikfom, 
     return;
   }
 
-  cout << "UndistortPcl(meas, kf_state, *cur_pcl_un_);"<<endl;
+  // cout << "UndistortPcl(meas, kf_state, *cur_pcl_un_);"<<endl;
 
   //畸变纠正
   UndistortPcl(meas, kf_state, *cur_pcl_un_);
