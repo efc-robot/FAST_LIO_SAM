@@ -1,0 +1,16 @@
+# hesai Dependencies
+- git:
+   local-name: drivers/hesai_lidar
+   uri: https://github.com/HesaiTechnology/HesaiLidar_General_ROS.git
+   version: f574bb8
+
+# Forsense IMU
+- git:
+   local-name: drivers/serial
+   uri: https://github.com/wjwwood/serial.git
+   version: main
+- git:
+   local-name: drivers/forsense_driver_ros
+   uri: git@github.com:efc-robot/forsense-driver-ros.git
+   version: main
+
