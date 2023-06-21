@@ -897,7 +897,15 @@ void saveKeyFramesAndFactor()
     // *currentMapKeyFrame += *transformPointCloud(cornerCloudKeyFrames[keFrameIndex], &cloudKeyPoses6D->points[keFrameIndex]);
     // *currentMapKeyFrame += *transformPointCloud(surfCloudKeyFrames[keFrameIndex], &cloudKeyPoses6D->points[keFrameIndex]);
     *currentMapKeyFrame += *surfCloudKeyFrames[keFrameIndex];
-    sensor_msgs::PointCloud2 KeyFramePC = publishCloud(pubCurrentMapKeyFrame, currentMapKeyFrame, timeLaserInfoStamp, odometryFrame);
+    PointTypePose tmpPose6D;
+    tmpPose6D.x = 0;
+    tmpPose6D.y = 0;
+    tmpPose6D.z = 0;
+    tmpPose6D.roll = 0;
+    tmpPose6D.pitch = 0;
+    tmpPose6D.yaw = 0;
+    *currentMapKeyFrame = *transformPointCloud(currentMapKeyFrame, &tmpPose6D);
+    sensor_msgs::PointCloud2 KeyFramePC = publishCloud(pubCurrentMapKeyFrame, currentMapKeyFrame, timeLaserInfoStamp, baselinkFrame);
     fast_lio_sam::keyframe KeyFrame;
     // KeyFrame.header = lastHeader;
     KeyFrame.index = thisPoseSt.header.seq;
