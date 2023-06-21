@@ -1,8 +1,8 @@
 robot_id: "robot1"
 
 common:
-    lid_topic:  "/hesai/pandar"
-    imu_topic:  "/IMU_data"
+    lid_topic:  "pandar"
+    imu_topic:  "forsense/imu_raw"
     odomTopic: "odometry/imu"                   # IMU pre-preintegration odometry, same frequency as IMU
     time_sync_en: false         # ONLY turn on when external time synchronization is really not possible
 
