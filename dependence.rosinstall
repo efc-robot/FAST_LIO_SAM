@@ -1,0 +1,28 @@
+- git:
+   local-name: thirdparty/gflags_catkin
+   uri: https://github.com/ethz-asl/gflags_catkin.git
+   version: master
+- git:
+   local-name: thirdparty/glog_catkin
+   uri: https://github.com/ethz-asl/glog_catkin.git
+   version: master
+- git:
+   local-name: thirdparty/eigen_catkin
+   uri: https://github.com/ethz-asl/eigen_catkin.git
+   version: 00b5eb2
+- git:
+   local-name: thirdparty/gtsam_catkin
+   uri: https://github.com/ethz-asl/gtsam_catkin.git
+   version: ecf6a04
+- git:
+   local-name: thirdparty/catkin_simple
+   uri: https://github.com/catkin/catkin_simple.git
+   version: 0e62848
+- git:
+   local-name: thirdparty/metis_catkin
+   uri: https://github.com/ethz-asl/metis_catkin.git
+   version: c5c839c
+- git:
+   local-name: drivers/livox_driver_ros
+   uri: https://github.com/Livox-SDK/livox_ros_driver.git
+   version: 3d240d56

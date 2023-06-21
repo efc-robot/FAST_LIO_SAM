@@ -1,0 +1,38 @@
+FROM ros:noetic-perception-focal
+
+# nvidia-container-runtime
+# ENV NVIDIA_VISIBLE_DEVICES \
+# ${NVIDIA_VISIBLE_DEVICES:-all}
+
+# ENV NVIDIA_DRIVER_CAPABILITIES \
+# ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
+
+
+# RUN bash ./src/install_dependence.sh  
+
+#!/bin/bash
+#Basic Utilies
+RUN sudo apt update && sudo apt install -y build-essential software-properties-common cmake debconf-utils ros-noetic-desktop  python3-wstool python3-catkin-tools ros-noetic-perception-pcl && sudo apt-get clean
+
+# Dev Utilies
+RUN sudo apt install -y vim-tiny git net-tools libtool git vim && sudo apt-get clean
+
+# Fast-Lio-Sam
+RUN  sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt install -y ros-noetic-navigation ros-noetic-robot-localization ros-noetic-robot-state-publisher && sudo apt-get clean
+# fix `Could not find a package configuration file provided by "GeographicLib"`  error
+RUN sudo ln -s /usr/share/cmake/geographiclib/FindGeographicLib.cmake /usr/share/cmake-3.16/Modules/
+
+# For hesai Lidar
+RUN  sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt install -y libpcap-dev libyaml-cpp-dev && sudo apt-get clean
+
+RUN mkdir -p /catkin_ws/src
+
+WORKDIR /catkin_ws/
+
+COPY . /catkin_ws/src/FAST_LIO_SAM
+
+# RUN bash /catkin_ws/src/make_dependence.sh
+
+# RUN /bin/bash -c '. /opt/ros/noetic/setup.bash; catkin build;'
+
+RUN echo "source /catkin_ws/devel/setup.bash" >> /root/.bashrc 
