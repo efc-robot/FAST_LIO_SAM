@@ -1,6 +1,6 @@
 <launch>
 	<arg name="pcap_file"  default=""/>
-	<arg name="server_ip" default="192.168.10.201"/>
+	<arg name="server_ip" default="192.168.10.202"/>
 	<arg name="lidar_recv_port"  default="2368"/>
 	<arg name="gps_port"  default="10110"/>
 	<arg name="start_angle"  default="0"/>
@@ -18,16 +18,17 @@
 	<arg name="coordinate_correction_flag"  default="false"/>
 	<arg name="fixed_frame"  default=""/>
 	<arg name="target_frame"  default=""/>
-	<arg name="robot_id"  default="/"/>
+	<arg name="robot_id"  default="robot1"/>
 
 	<arg name="imu_div_name"  default="/dev/ttyUSB0"/>
-	<arg name="imu_topic"  default="IMU_data"/>
-	<arg name="mag_topic"  default="MAG_data"/>
-	<arg name="sample_rate" default="100" />
+	<arg name="imu_topic"  default="imu_raw"/>
+	<arg name="mag_topic"  default="mag_raw"/>
+	<arg name="imu_frame"  default="forsense"/>
+	<arg name="sample_rate" default="200" />
     <!-- <arg name="ns" default="/"/> -->
 	<!--"frame_id" represents the id of the point cloud data published to ROS-->
 
-	<node pkg="hesai_lidar" name="hesai_lidar" ns="$(arg namespace)" type="hesai_lidar_node" output="screen" >
+	<node pkg="hesai_lidar" name="hesai_lidar" ns="$(arg robot_id)" type="hesai_lidar_node" output="screen" >
 		<param name="pcap_file" type="string" value="$(arg pcap_file)"/>
 		<param name="server_ip" type="string" value="$(arg server_ip)"/>
 		<param name="lidar_recv_port"  type="int" value="$(arg lidar_recv_port)"/>
@@ -46,12 +47,16 @@
 		<param name="target_frame"  type="string" value="$(arg target_frame)"/>
 	</node>
 
+    <group ns="$(arg robot_id)" >
     <node pkg="forsense_imu" name="forsense" type="forsense_imu"  output="screen">
 		<param name="imu_div_name"  type="string" value="$(arg imu_div_name)"/>
 		<param name="imu_topic"  type="string" value="$(arg imu_topic)"/>
         <param name="mag_topic"  type="string" value="$(arg mag_topic)"/>
+		<param name="imu_frame"  type="string" value="$(arg imu_frame)"/>
         <param name="sample_rate"  type="int" value="$(arg sample_rate)" />
+        <param name="ns"  type="string" value="$(arg robot_id) "/>
     </node>
+    </group>
 
 
 
