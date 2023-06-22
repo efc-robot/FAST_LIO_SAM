@@ -1,4 +1,4 @@
-robot_id: "robot2"
+robot_id: "robot1"
 
 common:
     lid_topic:  "pandar"
@@ -25,10 +25,10 @@ mapping:
     fov_degree:    180
     det_range:     150.0
     extrinsic_est_en:  true      # true: enable the online estimation of IMU-LiDAR extrinsic
-    extrinsic_T: [ 0.057983, -0.217006, -0.088844 ]
-    extrinsic_R: [ 0.066365,  0.997750, -0.009571,
-                  -0.997753,  0.066448,  0.008612,
-                   0.009229,  0.008978,  0.999917]
+    extrinsic_T: [ -0.150455,  0.225220, -0.075329 ]
+    extrinsic_R: [ -0.032590,  0.999468, -0.001166,
+                   -0.999400, -0.032602, -0.011725,
+                   -0.011756,  0.000783,  0.999931]
 
 publish:
     path_en:  true
